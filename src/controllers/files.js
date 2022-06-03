@@ -37,13 +37,13 @@ export const uploadFiles = async (req, res) => {
         Key: "/" + file
     };
 
-    s3.putObject(params, (err, data) => {
+    s3.putObject(params, async(err, data) => {
         if (err) console.log(err, err.stack); // an error occurred
         else {
-            const localDb = await filesToDb(params.Key)
+            const localDb = filesToDb(params.Key).then(
             localDb
                 ? res.json({ message: 'File Uploaded' })
-                : res.json({ message: "Error updating DB" })
+                : res.json({ message: "Error updating DB" }))
         }
     })
 }
@@ -59,10 +59,10 @@ export const deleteFiles = async (req, res) => {
     s3.deleteObject(params, function (err, data) {
         if (err) console.log(err, err.stack); // an error occurred
         else {
-            const localDb = await deleteFileDb(params.Key)
+            const localDb = deleteFileDb(params.Key).then(
             localDb
                 ? res.json({ message: `File Deleted, file ${name} deleted from bucket` })
-                : res.json({ message: `Error updating DB, file ${name} deleted from bucket` })
+                : res.json({ message: `Error updating DB, file ${name} deleted from bucket` }))
         }
     });
 }

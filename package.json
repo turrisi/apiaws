@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "babel apiaws --out-dir build",
-    "dev": "nodemon index.js --exec babel-node",
-    "start": "node build/index.js"
+
+    "dev": "nodemon index.js --exec babel-node"
+
   },
   "keywords": [],
   "author": "",
